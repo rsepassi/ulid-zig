@@ -12,17 +12,13 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Cache zig binary
-        id: cache-zig
-        uses: actions/cache@v3
+      - uses: goto-bus-stop/setup-zig@v2
         with:
-          key: "zig-0.11.0"
-          path: |
-            zig-linux-x86_64-0.11.0
-      - if: ${{ steps.cache-zig.outputs.cache-hit != 'true' }}
-        run: wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz && tar -xf zig-linux-x86_64-0.11.0.tar.xz
-      - run: echo "$PWD/zig-linux-x86_64-0.11.0" >> $GITHUB_PATH
+          version: 0.11.0
       - run: zig build test
