@@ -3,6 +3,9 @@
 const std = @import("std");
 
 const Alphabet = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+comptime {
+    if (Alphabet.len != 32) @compileError("Bad alphabet");
+}
 pub const binary_length = 16;
 pub const text_length = 26;
 const text_time_bytes = 10;
@@ -64,30 +67,29 @@ pub const Ulid = packed struct {
     }
 
     pub fn encodeBuf(self: @This(), out: []u8) !void {
-        if (Alphabet.len != 32) @compileError("Bad alphabet");
         if (out.len != text_length) return error.UlidBufWrongSize;
 
         // encode time
         {
-            var idx: usize = 0;
             const base: u48 = Alphabet.len;
             var trem: u48 = self.time;
-            while (idx < text_time_bytes) : (idx += 1) {
+
+            inline for (0..text_time_bytes) |i| {
                 const val = @rem(trem, base);
                 trem >>= 5;
-                out[text_time_bytes - 1 - idx] = Alphabet[@intCast(val)];
+                out[text_time_bytes - 1 - i] = Alphabet[@intCast(val)];
             }
         }
 
         // encode rand
         {
-            var idx: usize = 0;
             const base: u80 = Alphabet.len;
             var rrem: u80 = self.rand;
-            while (idx < text_rand_bytes) : (idx += 1) {
+
+            inline for (0..text_rand_bytes) |i| {
                 const val = @rem(rrem, base);
                 rrem >>= 5;
-                out[text_time_bytes + text_rand_bytes - 1 - idx] = Alphabet[@intCast(val)];
+                out[text_time_bytes + text_rand_bytes - 1 - i] = Alphabet[@intCast(val)];
             }
         }
     }
