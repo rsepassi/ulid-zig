@@ -9,6 +9,7 @@ pub fn build(b: *std.Build) !void {
 
     // Static library
     const ulid_lib = b.addStaticLibrary(.{ .name = "ulid", .root_source_file = .{ .path = "ulid.zig" }, .target = target, .optimize = optimize });
+    ulid_lib.linkLibC();
     const lib_step = b.step("lib", "Build the ulid static library");
     lib_step.dependOn(&ulid_lib.step);
     const install_h = b.addInstallHeaderFile("ulid.h", "ulid.h");
