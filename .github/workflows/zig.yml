@@ -10,12 +10,13 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: supplypike/setup-bin@v3
         with:
           uri: 'https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz'
           name: 'zig'
           version: '0.11.0'
+          command: 'tar -xf zig-linux-x86_64-0.11.0.tar.xz'
+          subPath: 'zig-linux-x86_64-0.11.0/zig'
   build:
     needs: setup
     runs-on: ubuntu-latest
