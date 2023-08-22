@@ -28,12 +28,15 @@ Build
 zig build
 
 // CLI
-NEW_ID=$(./zig-out/bin/ulid)
+alias ulid=$PWD/zig-out/bin/ulid
+NEW_ID=$(ulid)
 echo $NEW_ID
 
 // C library
 ls zig-out/lib/libulid.a
 ls zig-out/include/ulid.h
+
+// Example usage of the C library
 zig cc ulid.c -Lzig-out/lib -Izig-out/include -lulid -lc -O3 -o ulid
 ./ulid
 ```
