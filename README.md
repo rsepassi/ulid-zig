@@ -9,8 +9,8 @@ Zig implementation of Universally Unique Lexicographically Sortable Identifiers 
 `build.zig.zon`
 ```
 .ulid = .{
-  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.1.0",
-  .hash = "1220b20a2824e967a9a761f8b7131e2b84add447312fab5838095359ccf4f2bd93bf",
+  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.2.0",
+  .hash = "1220f18ca3266e17936aa33af496849d12beb8050c016eeed7fd43b38a2ab65af99f",
 },
 ```
 
