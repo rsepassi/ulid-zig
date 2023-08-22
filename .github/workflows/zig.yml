@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
       - run: tar -xf zig-linux-x86_64-0.11.0.tar.xz
-      - run: mv zig-linux-x86_64-0.11.0/zig /usr/local/bin/
+      - run: echo "$PWD/zig-linux-x86_64-0.11.0" >> $GITHUB_PATH
   build:
     needs: setup
     runs-on: ubuntu-latest
