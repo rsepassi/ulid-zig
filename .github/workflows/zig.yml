@@ -12,5 +12,5 @@ jobs:
     steps:
       - run: wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
       - run: tar -xf zig-linux-x86_64-0.11.0.tar.xz
-      - run: alias zig="$PWD/zig-linux-x86_64-0.11.0/zig"
+      - run: echo "$PWD/zig-linux-x86_64-0.11.0/zig" >> $GITHUB_PATH
       - run: zig build test
