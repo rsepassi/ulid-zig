@@ -98,3 +98,10 @@ Implementation notes:
 * The `Ulid` struct is packed such that it is trivially bit-castable to `u128` or `[16]u8`.
 * Uses inline for loops in encode and decode, and an inline switch for the
   base32 alphabet decoding.
+
+---
+
+Possible future work, pull requests welcome:
+
+* Explore SIMD encode/decode
+* Wrap for SQLite usage ([`sqlite3_create_function`](https://www.sqlite.org/c3ref/create_function.html))
