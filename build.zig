@@ -24,6 +24,7 @@ pub fn build(b: *std.Build) !void {
         .optimize = .ReleaseFast,
     });
     ulid_bench.addModule("ulid", ulid_module);
+    ulid_bench.linkLibC();
     {
         const bench_step = b.step("benchmark", "Run the ulid benchmarks");
         bench_step.dependOn(&b.addRunArtifact(ulid_bench).step);
