@@ -14,6 +14,12 @@ Zig implementation of Universally Unique Lexicographically Sortable Identifiers 
 },
 ```
 
+`build.zig`
+```
+const ulid = b.dependency("ulid", .{}).module("ulid");
+my_lib.addModule("ulid", ulid);
+```
+
 ---
 
 Build
