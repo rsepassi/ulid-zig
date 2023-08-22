@@ -1,6 +1,6 @@
 # ULID
 
-Zig implementation of [ULID](https://github.com/ulid/spec).
+Zig implementation of Universally Unique Lexicographically Sortable Identifiers ([ULIDs](https://github.com/ulid/spec)).
 
 ---
 
