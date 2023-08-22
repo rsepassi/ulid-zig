@@ -11,7 +11,7 @@ Zig implementation of [ULID](https://github.com/ulid/spec).
       },
 ```
 
-```
+```bash
 zig build
 
 // CLI
@@ -23,7 +23,7 @@ ls zig-out/lib/libulid.a
 ls zig-out/include/ulid.h
 ```
 
-```
+```bash
 // On an M1 Mac
 zig build benchmark
 ids/s=26915455.19
@@ -33,7 +33,7 @@ decodes/s=46610268.24
 bindecodes/s=1047668936.62
 ```
 
-```
+```zig
 // ulid_example.zig
 
 const std = @import("std");
