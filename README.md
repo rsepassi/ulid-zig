@@ -2,13 +2,12 @@
 
 Zig implementation of [ULID](https://github.com/ulid/spec).
 
-
 `build.zig.zon`
 ```
-      .ulid = .{
-        .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/c4c34fd",
-        .hash = "122043a91951da3f743a048f3bdd5b167668c92184b71e411d9b0c35d2837805ce0d",
-      },
+.ulid = .{
+  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/c4c34fd",
+  .hash = "122043a91951da3f743a048f3bdd5b167668c92184b71e411d9b0c35d2837805ce0d",
+},
 ```
 
 ```bash
@@ -21,9 +20,14 @@ echo $NEW_ID
 // C library
 ls zig-out/lib/libulid.a
 ls zig-out/include/ulid.h
+zig cc ulid.c -Lzig-out/lib -Izig-out/include -lulid -lc -O3 -o ulid
+./ulid
 ```
 
+Tests and benchmark:
 ```bash
+zig build test
+
 // On an M1 Mac
 zig build benchmark
 ids/s=26915455.19
@@ -56,7 +60,7 @@ pub fn main() !void {
         }
         std.debug.print("{s}\n", .{encoded});
 
-        // Binary encode/decode (simple bitCast)
+        // Binary encode/decode (trivial bitCast)
         const bytes = id.bytes();
         const decoded_b = try ulid.Ulid.fromBytes(&bytes);
         if (!id.equals(decoded_b)) {
@@ -75,3 +79,9 @@ pub fn main() !void {
     }
 }
 ```
+
+## Implementation notes
+
+* The `Ulid` struct is packed such that it is trivially bit-castable to `u128` or `[16]u8`.
+* Uses inline for loops in encode and decode, and an inline switch for the
+  base32 alphabet decoding.
