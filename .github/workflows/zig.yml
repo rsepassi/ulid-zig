@@ -10,7 +10,6 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      steps:
       - uses: actions/checkout@v3
       - uses: supplypike/setup-bin@v3
         with:
@@ -21,4 +20,4 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-    - run: zig build test
+      - run: zig build test
