@@ -2,6 +2,8 @@
 
 Zig implementation of [ULID](https://github.com/ulid/spec).
 
+---
+
 `build.zig.zon`
 ```
 .ulid = .{
@@ -9,6 +11,10 @@ Zig implementation of [ULID](https://github.com/ulid/spec).
   .hash = "1220b20a2824e967a9a761f8b7131e2b84add447312fab5838095359ccf4f2bd93bf",
 },
 ```
+
+---
+
+Build
 
 ```
 zig build
@@ -24,7 +30,9 @@ zig cc ulid.c -Lzig-out/lib -Izig-out/include -lulid -lc -O3 -o ulid
 ./ulid
 ```
 
-Tests and benchmark:
+---
+
+Tests and benchmark
 ```
 zig build test
 
@@ -37,8 +45,11 @@ decodes/s=46610268.24
 bindecodes/s=1047668936.62
 ```
 
+---
+
+`ulid_example.zig`
+
 ```zig
-// ulid_example.zig
 
 const std = @import("std");
 const ulid = @import("ulid");
@@ -80,7 +91,9 @@ pub fn main() !void {
 }
 ```
 
-## Implementation notes
+---
+
+Implementation notes:
 
 * The `Ulid` struct is packed such that it is trivially bit-castable to `u128` or `[16]u8`.
 * Uses inline for loops in encode and decode, and an inline switch for the
