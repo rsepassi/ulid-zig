@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cache Gradle packages
+      - name: Cache zig binary
         uses: actions/cache@v3
         with:
           key: "zig-0.11.0"
