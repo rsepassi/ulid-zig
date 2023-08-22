@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Zig CI
 
 on:
   push:
@@ -6,10 +6,15 @@ on:
   pull_request:
     branches: [ "main" ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - run: wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
       - run: tar -xf zig-linux-x86_64-0.11.0.tar.xz
       - run: echo "$PWD/zig-linux-x86_64-0.11.0" >> $GITHUB_PATH
