@@ -10,7 +10,7 @@ Zig implementation of [ULID](https://github.com/ulid/spec).
 },
 ```
 
-```bash
+```
 zig build
 
 // CLI
@@ -25,7 +25,7 @@ zig cc ulid.c -Lzig-out/lib -Izig-out/include -lulid -lc -O3 -o ulid
 ```
 
 Tests and benchmark:
-```bash
+```
 zig build test
 
 // On an M1 Mac
