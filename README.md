@@ -5,8 +5,8 @@ Zig implementation of [ULID](https://github.com/ulid/spec).
 `build.zig.zon`
 ```
 .ulid = .{
-  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/8c8789e",
-  .hash = "12209ad26e7a3bcc420f86f1533c4462794efbcdbd26f49b7d4db9569d01addb0636",
+  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.1.0",
+  .hash = "1220b20a2824e967a9a761f8b7131e2b84add447312fab5838095359ccf4f2bd93bf",
 },
 ```
 
