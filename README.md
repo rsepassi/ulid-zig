@@ -98,6 +98,9 @@ Implementation notes:
 * The `Ulid` struct is packed such that it is trivially bit-castable to `u128` or `[16]u8`.
 * Uses inline for loops in encode and decode, and an inline switch for the
   base32 alphabet decoding.
+* Uses `std.crypto.random` by default, a cryptographically secure PRNG.
+* Implements monotonic sort order (correctly detects and handles the same
+  millisecond) per `Factory`.
 
 ---
 
