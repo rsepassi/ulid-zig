@@ -1,5 +1,7 @@
 # ULID
 
+![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)
+
 Zig implementation of Universally Unique Lexicographically Sortable Identifiers ([ULIDs](https://github.com/ulid/spec)).
 
 ---
