@@ -12,6 +12,15 @@ const text_time_bytes = 10;
 const text_rand_bytes = 16;
 
 fn alphaIdx(c: u8) ?u8 {
+    const alpha_idxs = comptime blk: {
+        var idxs = [1]?u8{null} ** 256;
+        for (0..256) |i| idxs[i] = _alphaIdx(@truncate(i));
+        break :blk idxs;
+    };
+    return alpha_idxs[c];
+}
+
+fn _alphaIdx(c: u8) ?u8 {
     return switch (c) {
         // inline 0...47 => null,
         inline '0'...'9' => |i| i - 48,
