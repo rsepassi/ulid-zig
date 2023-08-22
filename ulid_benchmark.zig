@@ -3,7 +3,8 @@ const ulid = @import("ulid");
 
 pub fn main() !void {
     var factory = ulid.Factory{};
-    const allocator = std.heap.page_allocator;
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    const allocator = gpa.allocator();
     const num = 1_000_000;
 
     var ulids = try allocator.alloc(ulid.Ulid, num);
