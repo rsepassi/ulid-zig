@@ -47,6 +47,9 @@ decodes/s=46610268.24
 bindecodes/s=1047668936.62
 ```
 
+[CI](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml) runs on
+Mac, Windows, and Linux with Zig v0.11.0.
+
 ---
 
 `ulid_example.zig`
