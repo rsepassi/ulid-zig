@@ -52,6 +52,7 @@ pub fn build(b: *std.Build) !void {
         .name = "ulid-test",
         .root_source_file = .{ .path = "ulid.zig" },
     });
+    ulid_test.linkLibC();
     const ulid_ctest = b.addExecutable(.{ .name = "ulidc-test" });
     ulid_ctest.addCSourceFile(.{ .file = .{ .path = "ulid.c" }, .flags = &[_][]const u8{"-DTEST"} });
     ulid_ctest.linkLibrary(ulid_lib);
