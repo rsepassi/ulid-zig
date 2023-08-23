@@ -13,8 +13,8 @@ const text_rand_bytes = 16;
 
 fn alphaIdx(c: u8) ?u8 {
     const alpha_idxs = comptime blk: {
-        var idxs = [1]?u8{null} ** 256;
-        for (0..256) |i| idxs[i] = _alphaIdx(@truncate(i));
+        var idxs: [256]?u8 = undefined;
+        for (0..256) |i| idxs[i] = _alphaIdx(i);
         break :blk idxs;
     };
     return alpha_idxs[c];
@@ -22,20 +22,19 @@ fn alphaIdx(c: u8) ?u8 {
 
 fn _alphaIdx(c: u8) ?u8 {
     return switch (c) {
-        // inline 0...47 => null,
+        inline 0...47 => null,
         inline '0'...'9' => |i| i - 48,
-        // inline 58...64 => null,
+        inline 58...64 => null,
         inline 'A'...'H' => |i| i - 65 + 10,
-        // inline 'I' => null,
+        inline 'I' => null,
         inline 'J'...'K' => |i| i - 65 + 10 - 1,
-        // inline 'L' => null,
+        inline 'L' => null,
         inline 'M'...'N' => |i| i - 65 + 10 - 2,
-        // inline 'O' => null,
+        inline 'O' => null,
         inline 'P'...'T' => |i| i - 65 + 10 - 3,
-        // inline 'U' => null,
+        inline 'U' => null,
         inline 'V'...'Z' => |i| i - 65 + 10 - 4,
-        // inline 91...255 => null,
-        inline else => null,
+        inline 91...255 => null,
     };
 }
 
