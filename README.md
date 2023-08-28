@@ -1,13 +1,20 @@
-# ULID
-
-[![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml)
+# `ulid-zig`
 
 Zig implementation of Universally Unique Lexicographically Sortable Identifiers ([ULIDs](https://github.com/ulid/spec)).
 
 ---
 
+[![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml)
+
+*[Tested]([https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml?query=branch%3Amain))
+weekly and on push on Windows, Linux, Mac with Zig v0.11*
+
+---
+
+Depend
+
 `build.zig.zon`
-```
+```zig
 .ulid = .{
   .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.3.0",
   .hash = "1220f41bf4ddb224d673a8cc7c3b0a473a5139e0b659854535b1c3f9b5ecfe848d06",
@@ -15,16 +22,43 @@ Zig implementation of Universally Unique Lexicographically Sortable Identifiers 
 ```
 
 `build.zig`
-```
+```zig
 const ulid = b.dependency("ulid", .{}).module("ulid");
 my_lib.addModule("ulid", ulid);
+```
+---
+Usage
+```zig
+const ulid = @import("ulid");
+
+// Generate id
+const id = try ulid.next();
+
+// Access timestamp and random components
+_ = id.time;
+_ = id.rand;
+
+// base32 encode/decode
+const encoded = id.encode();
+const decoded = try ulid.Ulid.decode(&encoded);
+
+// binary encode/decode
+const bencoded = id.bytes();
+const bdecoded = try ulid.Ulid.fromBytes(&bencoded);
+
+// base32 string formatting
+std.debug.print("{s}\n", .{id});
+
+// Optionally use an explicit factory
+var factory = ulid.Factory{};
+const id = try factory.next();
 ```
 
 ---
 
 Build
 
-```
+```bash
 zig build
 
 // CLI
@@ -43,10 +77,14 @@ zig cc ulid.c -Lzig-out/lib -Izig-out/include -lulid -lc -O3 -o ulid
 
 ---
 
-Tests and benchmark
+Test
 ```
 zig build test
+```
+---
+Benchmark
 
+```
 // On an M1 Mac
 zig build benchmark
 ids/s=26915455.19
@@ -55,59 +93,9 @@ binencodes/s=629838736.09
 decodes/s=46610268.24
 bindecodes/s=1047668936.62
 ```
-
-[CI](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml?query=branch%3Amain)
-runs on Mac, Windows, and Linux with Zig v0.11.0.
-
 ---
 
-`ulid_example.zig`
-
-```zig
-
-const std = @import("std");
-const ulid = @import("ulid");
-
-pub fn main() !void {
-    {
-        // Generate a ULID. Uses a thread-local factory.
-        const id = try ulid.next();
-
-        // Access timestamp and random components
-        _ = id.time;
-        _ = id.rand;
-
-        // base32 encode/decode
-        const encoded = id.encode();
-        const decoded = try ulid.Ulid.decode(&encoded);
-        if (!id.equals(decoded)) {
-            unreachable;
-        }
-        std.debug.print("{s}\n", .{encoded});
-
-        // Binary encode/decode (trivial bitCast)
-        const bytes = id.bytes();
-        const decoded_b = try ulid.Ulid.fromBytes(&bytes);
-        if (!id.equals(decoded_b)) {
-            unreachable;
-        }
-
-        // Automatic base32 string formatting
-        std.debug.print("{s}\n", .{id});
-    }
-
-    // Can also use an explicit factory
-    {
-        var factory = ulid.Factory{};
-        const id = try factory.next();
-        _ = id;
-    }
-}
-```
-
----
-
-Implementation notes:
+Implementation notes
 
 * The `Ulid` struct is packed such that it is trivially bit-castable to `u128` or `[16]u8`.
 * Uses inline for loops in encode and decode, and a comptime-constructed lookup table for
