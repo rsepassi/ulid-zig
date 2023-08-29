@@ -4,10 +4,9 @@ Zig implementation of Universally Unique Lexicographically Sortable Identifiers 
 
 ---
 
-[![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml)
+[![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)][ci]
 
-*[Tested]([https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml?query=branch%3Amain))
-weekly and on push on Windows, Linux, Mac with Zig v0.11*
+*[Tested][ci] weekly and on push on Windows, Linux, Mac with Zig v0.11*
 
 ---
 
@@ -110,3 +109,6 @@ Possible future work, pull requests welcome:
 
 * Explore SIMD encode/decode
 * Wrap for SQLite usage ([`sqlite3_create_function`](https://www.sqlite.org/c3ref/create_function.html))
+
+
+[ci]: https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml?query=branch%3Amain
