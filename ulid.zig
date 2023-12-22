@@ -69,7 +69,7 @@ pub const Ulid = packed struct {
     }
 
     pub fn encodeAlloc(self: @This(), allocator: std.mem.Allocator) ![]u8 {
-        var out = try allocator.alloc(u8, text_length);
+        const out = try allocator.alloc(u8, text_length);
         self.encodeBuf(out) catch unreachable;
         return out;
     }
@@ -164,7 +164,7 @@ pub const Factory = struct {
 };
 
 export fn ulid_factory() ?*anyopaque {
-    var factory = std.heap.c_allocator.create(Factory) catch {
+    const factory = std.heap.c_allocator.create(Factory) catch {
         return null;
     };
     factory.* = Factory{};
@@ -221,11 +221,11 @@ export fn ulid_timestamp_ms(ulid: UlidC) i64 {
 }
 
 test "c" {
-    var factory = ulid_factory().?;
+    const factory = ulid_factory().?;
     const id0 = ulid_next(factory);
-    var buf = try std.testing.allocator.alloc(u8, text_length);
+    const buf = try std.testing.allocator.alloc(u8, text_length);
     defer std.testing.allocator.free(buf);
-    var buf_ptr: [*]u8 = @ptrCast(buf);
+    const buf_ptr: [*]u8 = @ptrCast(buf);
     ulid_encode(id0, buf_ptr);
     try std.testing.expectEqual(ulid_decode(buf_ptr), id0);
 }
