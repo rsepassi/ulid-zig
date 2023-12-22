@@ -6,7 +6,9 @@ Zig implementation of Universally Unique Lexicographically Sortable Identifiers 
 
 [![test](https://github.com/rsepassi/ulid-zig/actions/workflows/zig.yml/badge.svg)][ci]
 
-*[Tested][ci] weekly and on push on Windows, Linux, Mac with Zig v0.11*
+*[Tested][ci] weekly and on push on Windows, Linux, Mac with Zig v0.11.0.
+Irregularly tested with Zig master (last verified to work with
+0.12.0-dev.1836+dd189a354).*
 
 ---
 
@@ -15,8 +17,8 @@ Depend
 `build.zig.zon`
 ```zig
 .ulid = .{
-  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.3.0",
-  .hash = "1220f41bf4ddb224d673a8cc7c3b0a473a5139e0b659854535b1c3f9b5ecfe848d06",
+  .url = "https://api.github.com/repos/rsepassi/ulid-zig/tarball/v0.4.0",
+  .hash = "...",
 },
 ```
 
