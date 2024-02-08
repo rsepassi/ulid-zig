@@ -5,7 +5,7 @@ pub fn build(b: *std.Build) !void {
     const optimize = b.standardOptimizeOption(.{});
 
     // Module
-    const ulid_module = b.addModule("ulid", .{ .source_file = .{ .path = "ulid.zig" } });
+    const ulid_module = b.addModule("ulid", .{ .root_source_file = .{ .path = "ulid.zig" } });
 
     // Static library
     const ulid_lib = b.addStaticLibrary(.{ .name = "ulid", .root_source_file = .{ .path = "ulid.zig" }, .target = target, .optimize = optimize });
@@ -22,8 +22,9 @@ pub fn build(b: *std.Build) !void {
         .name = "ulid-bench",
         .root_source_file = .{ .path = "ulid_benchmark.zig" },
         .optimize = .ReleaseFast,
+        .target = target,
     });
-    ulid_bench.addModule("ulid", ulid_module);
+    ulid_bench.root_module.addImport("ulid", ulid_module);
     ulid_bench.linkLibC();
     {
         const bench_step = b.step("benchmark", "Run the ulid benchmarks");
@@ -34,13 +35,19 @@ pub fn build(b: *std.Build) !void {
     const ulid_example = b.addExecutable(.{
         .name = "ulid-example",
         .root_source_file = .{ .path = "ulid_example.zig" },
+        .target = target,
+        .optimize = optimize,
     });
-    ulid_example.addModule("ulid", ulid_module);
+    ulid_example.root_module.addImport("ulid", ulid_module);
     const example_step = b.step("example", "Run the ulid example");
     example_step.dependOn(&b.addRunArtifact(ulid_example).step);
 
     // CLI
-    const ulid_bin = b.addExecutable(.{ .name = "ulid" });
+    const ulid_bin = b.addExecutable(.{
+        .name = "ulid",
+        .target = target,
+        .optimize = optimize,
+    });
     ulid_bin.addCSourceFile(.{ .file = .{ .path = "ulid.c" }, .flags = &[_][]const u8{} });
     ulid_bin.linkLibrary(ulid_lib);
     const bin_step = b.step("cli", "Build the ulid cli");
@@ -51,9 +58,15 @@ pub fn build(b: *std.Build) !void {
     const ulid_test = b.addTest(.{
         .name = "ulid-test",
         .root_source_file = .{ .path = "ulid.zig" },
+        .target = target,
+        .optimize = optimize,
     });
     ulid_test.linkLibC();
-    const ulid_ctest = b.addExecutable(.{ .name = "ulidc-test" });
+    const ulid_ctest = b.addExecutable(.{
+        .name = "ulidc-test",
+        .target = target,
+        .optimize = optimize,
+    });
     ulid_ctest.addCSourceFile(.{ .file = .{ .path = "ulid.c" }, .flags = &[_][]const u8{"-DTEST"} });
     ulid_ctest.linkLibrary(ulid_lib);
     tests.dependOn(&b.addRunArtifact(ulid_ctest).step);
