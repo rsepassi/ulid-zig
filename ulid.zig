@@ -12,6 +12,7 @@ const text_time_bytes = 10;
 const text_rand_bytes = 16;
 
 fn alphaIdx(c: u8) ?u8 {
+    @setEvalBranchQuota(100000);
     const alpha_idxs = comptime blk: {
         var idxs: [256]?u8 = undefined;
         for (0..256) |i| idxs[i] = _alphaIdx(i);
