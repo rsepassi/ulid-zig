@@ -12,7 +12,7 @@ pub fn build(b: *std.Build) !void {
     ulid_lib.linkLibC();
     const lib_step = b.step("lib", "Build the ulid static library");
     lib_step.dependOn(&ulid_lib.step);
-    const install_h = b.addInstallHeaderFile("ulid.h", "ulid.h");
+    const install_h = b.addInstallHeaderFile(b.path("ulid.h"), "ulid.h");
     lib_step.dependOn(&install_h.step);
     const install_lib = b.addInstallArtifact(ulid_lib, .{});
     lib_step.dependOn(&install_lib.step);
